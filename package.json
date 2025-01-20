@@ -1,0 +1,16 @@
+{
+  "name": "twa",
+  "version": "1.0.0",
+  "description": "Najlepsi projekt",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Crespo",
+  "license": "ISC",
+  "dependencies": {
+    "ajv": "^8.17.1",
+    "crypto": "^1.0.1",
+    "express": "^4.21.2"
+  }
+}
