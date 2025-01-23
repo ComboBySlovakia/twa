@@ -5,7 +5,6 @@ const Ajv = require("ajv");
 const ajv = new(Ajv);
 
 const crypto = require("crypto");
-const {reset} = require("nodemon");
 
 const app = express();
 
@@ -17,7 +16,7 @@ app.use(express.urlencoded({extended: true}));
 
 const player = [];
 
-match = [];
+const match = [];
 
 app.post("/create/player", (req, res) => {
 
@@ -29,12 +28,11 @@ app.post("/create/player", (req, res) => {
         properties: {
             name:  {type:"string", maxLength: 20, minLength: 1, pattern: "^[a-zA-ZáäčďéíľĺňóôřšťúýžÁÄČĎÉÍĽĹŇÓÔŘŠŤÚÝŽ]+$"},
             surname: {type:"string", maxLength: 20, minLength: 1, pattern: "^[a-zA-ZáäčďéíľĺňóôřšťúýžÁÄČĎÉÍĽĹŇÓÔŘŠŤÚÝŽ]+$"},
-            id: {type:"number"},
             club: {type:"string", maxLength: 35, minLength: 5, pattern: "^[a-zA-ZáäčďéíľĺňóôřšťúýžÁÄČĎÉÍĽĹŇÓÔŘŠŤÚÝŽ]+$"},
             gender: {type:"string", maxLength: 4, minLength: 3, pattern: "^[a-zA-ZáäčďéíľĺňóôřšťúýžÁÄČĎÉÍĽĹŇÓÔŘŠŤÚÝŽ]+$"},
             position: {type:"string", maxLength: 20, minLength: 5,pattern: "^[a-zA-ZáäčďéíľĺňóôřšťúýžÁÄČĎÉÍĽĹŇÓÔŘŠŤÚÝŽ]+$"}
         },
-        required: ["name", "surname", "id", "club", "gender", "position"],
+        required: ["name", "surname", "club", "gender", "position"],
         additionalProperties: false
 
     }
@@ -51,20 +49,25 @@ app.post("/create/player", (req, res) => {
         return;
     }
 
+    const newPlayer = { id: crypto.randomBytes(16).toString("hex"), ...body };
+
+    player.push(newPlayer);
+
     console.log(player)
+
+    res.json(newPlayer);
 });
 
 app.get("/players/list", (req, res) => {
 
-res.send(player)
-
+    res.send(player);
 });
 
 app.post("/update/results", (req, res) => {
 
     const body = req.body;
     const id = req.body.id;
-    const matchIndex = match.findIndex((match)=> match.id === body.id);
+    const matchIndex = match.findIndex((match)=> match.id === id);
 
     if (matchIndex === -1) {
 
@@ -75,14 +78,14 @@ app.post("/update/results", (req, res) => {
 
     }
 
-    const tempStudent = student[studentIndex];
+    const tempPlayer =player[playerIndex];
 
-    student[studentIndex] = {
-        ...tempStudent,
+    player[playerIndex] = {
+        ...tempPlayer,
         ...body,
     }
 
-    res.send(student[studentIndex]);
+    res.send(player[playerIndex]);
 
 
 });
@@ -90,7 +93,7 @@ app.post("/update/results", (req, res) => {
 app.post("/delete/player", (req,res) => {
 
     const id = req.body.id;
-    const playerIndex = player.findIndex((player)=> player.id=== id);
+    const playerIndex = player.findIndex((player)=> player.id === id);
     if (playerIndex === -1) {
 
         res.status(400).json({
