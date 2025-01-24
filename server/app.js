@@ -23,7 +23,6 @@ const clubs = [];
 // Vytvorenie hráča
 app.post("/create/player", (req, res) => {
 
-
     const body = req.body;
 
     // Definovanie zoznnamu pozící, využije sa pri overovaní platnosti pozície.
@@ -47,7 +46,7 @@ app.post("/create/player", (req, res) => {
             surname: {type:"string", maxLength: 20, minLength: 1, pattern: "^[a-zA-ZáäčďéíľĺňóôřšťúýžÁÄČĎÉÍĽĹŇÓÔŘŠŤÚÝŽ]+$"},
             club: {type:"string", maxLength: 35, minLength: 5, pattern: "^[a-zA-ZáäčďéíľĺňóôřšťúýžÁÄČĎÉÍĽĹŇÓÔŘŠŤÚÝŽ]+$"},
             gender: {type:"string", enum: ["muž", "žena"]},
-            position: {type:"string", maxLength: 20, minLength: 5,pattern: "^[a-zA-ZáäčďéíľĺňóôřšťúýžÁÄČĎÉÍĽĹŇÓÔŘŠŤÚÝŽ]+$"}
+            position: {type:"string", maxLength: 20, minLength: 5, pattern: "^[a-zA-ZáäčďéíľĺňóôřšťúýžÁÄČĎÉÍĽĹŇÓÔŘŠŤÚÝŽ ]+$"}
         },
         required: ["name", "surname", "club", "gender", "position"],
         additionalProperties: false
@@ -119,8 +118,8 @@ app.post("/create/match", (req, res) => {
     }
 
     // Konštanty pre zistenie, či kluby existujú.
-    const club1Index = clubs.findIndex((club) => club.id === body.club1);
-    const club2Index = clubs.findIndex((club) => club.id === body.club2);
+    const club1Index = clubs.findIndex((clubs) => clubs.id === body.club1);
+    const club2Index = clubs.findIndex((clubs) => clubs.id === body.club2);
 
     if (club1Index === -1 || club2Index === -1) {
         return res.status(400).json({
@@ -150,33 +149,40 @@ app.get("/players/list", (req, res) => {
     res.send(player);
 });
 
+// Endpoint pre aktualizovanie výsledkov zápasu
 app.post("/update/results", (req, res) => {
-
     const body = req.body;
-    const id = req.body.id;
-    const matchIndex = match.findIndex((match)=> match.id === id);
+    const { id, scoreClub1, scoreClub2 } = body;
+
+    // Nájdeme zápas podľa ID
+    const matchIndex = match.findIndex((match) => match.id === id);
 
     if (matchIndex === -1) {
-
-        res.status(400).json({
+        return res.status(400).json({
             code: "match_not_found",
-            message: `Match with id ${id} not found!`
+            message: `Match with id ${id} not found!`,
         });
-
     }
 
-    const tempPlayer =player[matchIndex];
+    // Aktualizovanie výsledkov zápasu.
+    const updatedMatch = {
+        ...match[matchIndex],
+        scoreClub1: scoreClub1 !== undefined ? scoreClub1 : match[matchIndex].scoreClub1,
+        scoreClub2: scoreClub2 !== undefined ? scoreClub2 : match[matchIndex].scoreClub2,
+    };
 
-    player[matchIndex] = {
-        ...tempPlayer,
-        ...body,
-    }
+    match[matchIndex] = updatedMatch;
 
-    res.send(player[matchIndex]);
+    console.log(match); // Log aktuálneho zoznamu zápasov
 
-
+    res.json({
+        message: "Match results updated successfully",
+        match: updatedMatch,
+    });
 });
 
+
+//Endpoint pre vymazanie hráča.
 app.post("/delete/player", (req,res) => {
 
     const id = req.body.id;
@@ -279,35 +285,36 @@ app.post("/club/delete", (req, res) => {
 
 
 // Cast kodu Martonak
-
-
-app.get("player/details", (req, res) => {
+app.get("/player/details", (req, res) => {
     const id = req.query.id;
-    const playerIndex = players = players.findIndex((players) => players.id ===id);
+    const playerIndex = player.findIndex((player) => player.id === id);
     if (playerIndex === -1) {
         return res.status(400).json({
             code: "player_not_found",
             message: "Player with id: ${id} not found",
         });
     }
-    res.json(players[playerIndex]);
+    res.json(player[playerIndex]);
 });
 
-app.post("/player/upadte", (req, res) => {
-    const id = req.body;
-    const playerIndex = players.findIndex((players) => players.id === body.id);
+app.post("/player/update", (req, res) => {
+
+    const body = req.body;
+
+    const id = req.body.id;
+    const playerIndex = player.findIndex((player) => player.id === id);
     if (playerIndex === -1) {
         return res.status(400).json({
             code: "player_not_found",
             message: 'Player with id: ${body.id} not found',
         });
     }
-    const tempPlayer = players[playerIndex];
-    players = [playerIndex] = {
+    const tempPlayer = player[playerIndex];
+    player[playerIndex] = {
         ...tempPlayer,
         ...body,
     };
-    res.send(players[playerIndex]);
+    res.send(player[playerIndex]);
 });
 
 app.listen(port, () => {
