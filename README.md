@@ -1,4 +1,4 @@
-## Študentský projekt - TWA
+## Študentský projekt - TWA ( FUTBALNET )
 Trieda: II.SC\
 Autori:\
 Matej Martoňák\
