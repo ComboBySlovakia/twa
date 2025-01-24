@@ -1,6 +1,7 @@
-Študentský projekt - TWA
-Trieda: II.SC
-Autori: Matej Martoňák,
-        Martin Kučera,
-        Nicolas Joshua Urban
+## Študentský projekt - TWA
+Trieda: II.SC\
+Autori:\
+Matej Martoňák\
+Martin Kučera \
+Nicolas Joshua Urban
                                                          
