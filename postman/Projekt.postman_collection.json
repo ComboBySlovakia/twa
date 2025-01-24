@@ -1,0 +1,132 @@
+{
+	"info": {
+		"_postman_id": "66ccf2ee-f3e1-4fa5-a9a2-b4300f7be732",
+		"name": "Projekt",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "39472374"
+	},
+	"item": [
+		{
+			"name": "club/create",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"logo\": \"https://api.sportnet.online/data/ppo/tj-rozvoj-pusovce.futbalnet.sk/logo\",\r\n    \"name\": \"TJRozvojPušovce\",\r\n    \"players\": 17\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8000/club/create",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"club",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "clubs/list",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8000/clubs/list",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"clubs",
+						"list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "clubs/details",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8000/clubs/details",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"clubs",
+						"details"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "club/update",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"a2ee494c0f09f58013688e46e44d5f65\",\r\n    \"name\": \"Meno\",\r\n    \"surname\": \"Priezvisko\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8000/club/update",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"club",
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "club/delete",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"a2ee494c0f09f58013688e46e44d5f65\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8000/club/delete",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"club",
+						"delete"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

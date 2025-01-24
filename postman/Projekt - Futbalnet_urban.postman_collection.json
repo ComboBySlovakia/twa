@@ -1,0 +1,87 @@
+{
+	"info": {
+		"_postman_id": "775e2f22-4e3e-488a-ba15-b7670d67ca03",
+		"name": "Projekt - Futbalnet",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "39471758"
+	},
+	"item": [
+		{
+			"name": "Projekt - Futbalnet",
+			"item": [
+				{
+					"name": "create/player",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Martin\",\r\n    \"surname\": \"Kučera\",\r\n    \"club\": \"pesssk\",\r\n    \"gender\": \"žena\",\r\n    \"position\": \"pesko\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "localhost:8000/create/player"
+					},
+					"response": []
+				},
+				{
+					"name": "players/list",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "localhost:8000/players/list"
+					},
+					"response": []
+				},
+				{
+					"name": "update/results",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"2b26ff0383c3f0c000334bfde0cadad6\"\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "localhost:8000/update/results"
+					},
+					"response": []
+				},
+				{
+					"name": "delete/player",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": "localhost:8000"
+					},
+					"response": []
+				},
+				{
+					"name": "create/match",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"club1\": \"d7167491c58c5c19e91ac9c6791390cd\",\r\n    \"club2\": \"d7167491c58c5c19e91ac9c6791390cd\"\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "localhost:8000/create/match"
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
