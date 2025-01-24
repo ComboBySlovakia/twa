@@ -1,21 +1,32 @@
+// načítanie modulu express
+
 const express = require("express");
 
+// modul ajv
 const Ajv = require("ajv");
 
 const ajv = new(Ajv);
 
+// modul crypto
 const crypto = require("crypto");
 
+// inicializácia express servera
 const app = express();
 
+// definovanie portu
 const port = 8000;
 
+// podpora pre json
 app.use(express.json());
 
+//podpora pre application /x-www-form-urlencoded
 app.use(express.urlencoded({extended: true}));
 
+// pole /zoznam hráčov
 const player = [];
+// pole / zoznam zápasov
 const match = [];
+// pole/ zoznam klubov
 const clubs = [];
 
 // Cast kodu - Urban
@@ -92,6 +103,7 @@ app.post("/create/player", (req, res) => {
     res.json(newPlayer);
 });
 
+// Endpoint pre vytvorenie zápasu
 app.post("/create/match", (req, res) => {
     const body = req.body;
 
